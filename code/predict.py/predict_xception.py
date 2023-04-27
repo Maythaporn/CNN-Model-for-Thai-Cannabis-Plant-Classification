@@ -12,9 +12,22 @@ image_path = '/data/test/test1.jpg'
 
 # Load the model
 model = tf.keras.models.load_model(model_path)
+validation_dir = '/data/dataset'
 
 # Define the class labels
-labels = ['Foi_Thong', 'Hang_Kra_Rog_Phu_Phan_ST1', 'Hang_Suea_Sakonnakhon_TT1', 'Kroeng_Krawia', 'Tanao_Si_Kan_Khaw_WA1', 'Tanao_Si_Kan_Sang_RD1']
+labels = ['Foi_Thong', 'Hang_Kra_Rog_Phu_Phan_ST1', 'Hang_Suea_Sakonnakhon_TT1', 'Kroeng_Krawia', 'Tanao_Si_Kan_Khaw_WA1', 'Tanao_Si_Kan_Dang_RD1']
+
+target_size = (299, 299)
+
+# Load the validation dataset
+validation_generator = image.ImageDataGenerator(rescale=1./255).flow_from_directory(validation_dir, target_size=target_size, class_mode='categorical', batch_size=32)
+
+# Evaluate the model on the validation dataset
+score = model.evaluate(validation_generator)
+
+# Print the accuracy of the model
+print('Accuracy:', score[1])
+
 
 # Load and preprocess the image
 img = image.load_img(image_path, target_size=(299, 299))
@@ -27,12 +40,14 @@ predictions = model.predict(img_array)
 predicted_class = np.argmax(predictions[0])
 
 # Print the predicted class and its label
-print('Predicted class:', predicted_class)
-print('Predicted label:', labels[predicted_class])
+print('Cannabis Class:', labels[predicted_class])
+prediction_values = {}
+for i, label in enumerate(labels):
+    prediction_values[label] = round(predictions[0][i], 2)
 
-img = plt.imread('/data/test/test1.jpg')
+print('Prediction values:', prediction_values)
 
 # Display the image
-plt.imshow(img)
-plt.axis('off')
-plt.show()
+#plt.imshow(image_path)
+#plt.axis('off')
+#plt.show()
