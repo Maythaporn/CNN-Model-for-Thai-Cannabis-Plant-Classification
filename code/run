@@ -2,9 +2,14 @@
 set -ex
 
 # This is the master script for the capsule. When you click "Reproducible Run", the code in this file will execute.
-python -u predict.py/predict_inceptionV3.py "$@"
+jupyter nbconvert \
+	--to 'html' \
+	--ExecutePreprocessor.allow_errors=True \
+	--ExecutePreprocessor.timeout=-1 \
+	--FilesWriter.build_directory=../results \
+	--execute predict.py/predict.ipynb
 
 # The previous version of this file was commented-out and follows below:
 #
-# python -u predict.py/predict_xception.py "$@"
+# python -u predict.py/predict.py "$@"
 # 

@@ -4,11 +4,30 @@ from tensorflow.keras.preprocessing import image
 import os
 import matplotlib.pyplot as plt
 
-# Set the path to your saved model
-model_path = '/code/model/InceptionV3.h5'
+selected_model = 'Xception'
 
-# Set the path to the image you want to classify
-image_path = '/data/dataset/Kroeng_Krawia/IMG_6457.JPG'
+image_path = input("Enter the file path of the image you want to classify: ")
+
+print("\n  Please choose a model (default = Xception): ")
+print("1. Xception")
+print("2. InceptionV3")
+print("3. ResNet50")
+choose = input("Please Choose >> ")
+
+if choose == "1":
+    selected_model = 'Xception'
+
+elif choose == "2":
+    selected_model = "InceptionV3"
+
+elif choose == "3":
+    selected_model = "ResNet50"
+
+else:
+  print("ERROR")
+
+# Load the selected model and make a prediction
+model_path = f'/code/model/{selected_model}.h5'
 
 # Load the model
 model = tf.keras.models.load_model(model_path)
@@ -29,14 +48,9 @@ predictions = model.predict(img_array)
 predicted_class = np.argmax(predictions[0])
 
 # Print the predicted class and its label
-print('Cannabis Class:', labels[predicted_class])
+print('Cannabis plant verieties:', labels[predicted_class])
 prediction_values = {}
 for i, label in enumerate(labels):
     prediction_values[label] = round(predictions[0][i], 2)
 
 print('Prediction values:', prediction_values)
-
-# Display the image
-#plt.imshow(image_path)
-#plt.axis('off')
-#plt.show()
