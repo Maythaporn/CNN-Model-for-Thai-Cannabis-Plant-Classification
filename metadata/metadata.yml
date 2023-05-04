@@ -1,6 +1,18 @@
 metadata_version: 1
 name: Thai Cannabis Classification
+description: This repository contains the code and scripts used in the research on
+  'Performance Analysis of a Pre-trained CNN Model for Thai Cannabis Plant Classification
+  using Python'. It is intended for people who are interested in studying the topic.
 authors:
 - name: Maythaporn Klangburee
   affiliations:
   - name: Kasetsart University
+- name: 'Pattima Sommai '
+  affiliations:
+  - name: Kasetsart University
+- name: 'Samita Srinarang '
+  affiliations:
+  - name: Kasetsart University
+corresponding_contributor:
+  name: Maythaporn Klangburee
+  email: maythaporn.kl@ku.th
